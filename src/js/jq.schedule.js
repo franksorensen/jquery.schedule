@@ -28,7 +28,7 @@
         },
 
         /**
-         * 設定データの保存
+         * Saving configuration data
          *
          * @param {Options} data
          * @returns {*}
@@ -38,7 +38,7 @@
         },
 
         /**
-         * 設定データの取得
+         * Get configuration data
          *
          * @returns Options
          */
@@ -47,7 +47,7 @@
         },
 
         /**
-         * 保存データの保存
+         * Get configuration data
          *
          * @param {SaveData} data
          * @returns {*}
@@ -63,7 +63,7 @@
         },
 
         /**
-         * 保存データの取得
+         * Retrieving saved data
          *
          * @returns SaveData
          */
@@ -72,7 +72,7 @@
         },
 
         /**
-         * スケジュールの取得
+         * Get schedule
          *
          * @returns ScheduleData[]
          */
@@ -85,7 +85,7 @@
             return [];
         },
         /**
-         * get timelineData
+         * Get timelineData
          * @returns {any[]}
          */
         timelineData: function () {
@@ -110,7 +110,7 @@
             return data;
         },
         /**
-         * reset data
+         * Reset data
          */
         resetData: function () {
             return this.each(function () {
@@ -128,7 +128,7 @@
             });
         },
         /**
-         * add schedule data
+         * Add schedule data
          *
          * @param {number} timeline
          * @param {object} data
@@ -153,7 +153,7 @@
             });
         },
         /**
-         * add schedule data
+         * Add schedule data
          *
          * @param {number} timeline
          * @param {object} data
@@ -166,7 +166,7 @@
             });
         },
         /**
-         * clear row
+         * Clear row
          *
          * @returns {methods}
          */
@@ -183,7 +183,7 @@
             });
         },
         /**
-         * clear row
+         * Clear row
          *
          * @param {object} data
          * @returns {methods}
@@ -198,7 +198,7 @@
             });
         },
         /**
-         * switch draggable
+         * Switch draggable
          * @param {boolean} enable
          */
         setDraggable: function (enable) {
@@ -217,7 +217,7 @@
             });
         },
         /**
-         * switch resizable
+         * Switch resizable
          * @param {boolean} enable
          */
         setResizable: function (enable) {
@@ -236,7 +236,7 @@
             });
         },
         /**
-         * 現在のタイムライン番号を取得
+         * Get current timeline number
          *
          * @param node
          * @param top
@@ -266,7 +266,7 @@
             return num;
         },
         /**
-         * 背景データ追加
+         * Add background data
          *
          * @param {ScheduleData} data
          */
@@ -295,7 +295,7 @@
             });
         },
         /**
-         * スケジュール追加
+         * Add schedule
          *
          * @param timeline
          * @param {ScheduleData} d
@@ -333,10 +333,10 @@
                 // $this.find('.sc_main').append($bar);
                 var $row = $this.find('.sc_main .timeline').eq(timeline);
                 $row.append($bar);
-                // データの追加
+                // Add data
                 saveData.schedule.push(data);
                 methods._saveData.apply($this, [saveData]);
-                // コールバックがセットされていたら呼出
+                // Called if callback is set
                 if (setting.onAppendSchedule) {
                     setting.onAppendSchedule.apply($this, [
                         $bar,
@@ -348,7 +348,7 @@
                 $bar.data('sc_key', key);
 
                 $bar.on('mouseup', function () {
-                    // コールバックがセットされていたら呼出
+                    // Called if callback is set
                     if (setting.onClick) {
                         if ($(this).data('dragCheck') !== true && $(this).data('resizeCheck') !== true) {
                             let $n = $(this);
@@ -397,16 +397,16 @@
                         ui.position.left = Math.floor(ui.position.left / setting.widthTimeX) * setting.widthTimeX;
 
                         if (currentNode.nowTimeline !== timelineNum) {
-                            // 現在のタイムライン
+                            // current timeline
                             currentNode.nowTimeline = timelineNum;
                         }
                         currentNode.currentTop = ui.position.top;
                         currentNode.currentLeft = ui.position.left;
-                        // テキスト変更
+                        // text change
                         methods._rewriteBarText.apply($this, [$moveNode, saveData.schedule[scKey]]);
                         return true;
                     },
-                    // 要素の移動が終った後の処理
+                    // Processing after moving the element
                     stop: function () {
                         $(this).data('dragCheck', false);
                         currentNode = null;
@@ -446,11 +446,11 @@
                         $n.data('resizeCheck', true);
                     },
                     resize: function (ev, ui) {
-                        // box-sizing: border-box; に対応
+                        // box-sizing: border-box; Compatible with
                         ui.element.height(ui.size.height);
                         ui.element.width(ui.size.width);
                     },
-                    // 要素の移動が終った後の処理
+                    // Processing after moving the element
                     stop: function () {
                         let $n = $(this);
                         let scKey = $n.data('sc_key');
@@ -465,13 +465,13 @@
                         saveData.schedule[scKey].startTime = start;
                         saveData.schedule[scKey].endTime = end;
 
-                        // 高さ調整
+                        // Height adjustment
                         methods._resetBarPosition.apply($this, [timelineNum]);
-                        // テキスト変更
+                        // Text change
                         methods._rewriteBarText.apply($this, [$n, saveData.schedule[scKey]]);
 
                         $n.data('resizeCheck', false);
-                        // コールバックがセットされていたら呼出
+                        // Called if callback is set
                         if (setting.onChange) {
                             setting.onChange.apply($this, [
                                 $n,
@@ -490,7 +490,7 @@
             });
         },
         /**
-         * スケジュール数の取得
+         * Called if callback is set
          *
          * @param {number} n row number
          * @returns {number}
@@ -550,7 +550,7 @@
                     $tl.data('timeline', timeline);
                     $timeline.append($tl);
                 }
-                // クリックイベント
+                // click event
                 // left click
                 $timeline.find('.tl').on('click', function () {
                     if (setting.onScheduleClick) {
@@ -584,7 +584,7 @@
                     $this.find('.sc_data .timeline').eq(id).addClass(row.class);
                     $this.find('.sc_main .timeline').eq(id).addClass(row.class);
                 }
-                // スケジュールタイムライン
+                // schedule timeline
                 if (row.schedule) {
                     for (var i in row.schedule) {
                         var bdata = row.schedule[i];
@@ -605,7 +605,7 @@
                         methods._addScheduleData.apply($this, [id, data]);
                     }
                 }
-                // 高さの調整
+                // height adjustment
                 methods._resetBarPosition.apply($this, [id]);
                 $this.find('.sc_main .timeline').eq(id).droppable({
                     accept: '.sc_bar',
@@ -614,15 +614,15 @@
                         let scKey = node.data('sc_key');
                         let nowTimelineNum = saveData.schedule[scKey].timeline;
                         let timelineNum = $this.find('.sc_main .timeline').index(this);
-                        // タイムラインの変更
+                        // Change timeline
                         saveData.schedule[scKey].timeline = timelineNum;
                         node.appendTo(this);
-                        // 高さ調整
+                        // height adjustment
                         methods._resetBarPosition.apply($this, [nowTimelineNum]);
                         methods._resetBarPosition.apply($this, [timelineNum]);
                     }
                 });
-                // コールバックがセットされていたら呼出
+                // Called if callback is set
                 if (setting.onAppendRow) {
                     $this.find('.sc_main .timeline').eq(id).find('.sc_bar').each(function () {
                         let $n = $(this);
@@ -636,7 +636,7 @@
             });
         },
         /**
-         * テキストの変更
+         * Change text
          *
          * @param {jQuery} node
          * @param {Object} data
@@ -663,7 +663,7 @@
             return this.each(function () {
                 let $this = $(this);
                 let setting = methods._loadSettingData.apply($this);
-                // 要素の並び替え
+                // Sorting elements
                 let $barList = $this.find('.sc_main .timeline').eq(n).find('.sc_bar');
                 let codes = [], check = [];
                 let h = 0;
@@ -813,8 +813,8 @@
                     rows: {},
                     startTime: '07:00',
                     endTime: '19:30',
-                    widthTimeX: 25, // 1cell辺りの幅(px)
-                    widthTime: 600, // 区切り時間(秒)
+                    widthTimeX: 25, // 1cell width around (px)
+                    widthTime: 600, // Separation time (seconds)
                     timeLineY: 50, // timeline height(px)
                     timeLineBorder: 1, // timeline height border
                     timeBorder: 1, // border width
